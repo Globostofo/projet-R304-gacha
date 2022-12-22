@@ -44,8 +44,16 @@ public final class Global {
         return s + " ".repeat(size - s.length());
     }
 
+    public static String leftPad(int i, int size) {
+        return leftPad(String.valueOf(i), size);
+    }
+
     public static String rightPad(String s, int size) {
         return " ".repeat(size - s.length()) + s;
+    }
+
+    public static String rightPad(int i, int size) {
+        return rightPad(String.valueOf(i), size);
     }
 
     /**
