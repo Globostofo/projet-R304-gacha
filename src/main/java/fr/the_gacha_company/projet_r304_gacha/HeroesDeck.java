@@ -71,9 +71,9 @@ public class HeroesDeck extends ArrayList<Hero> implements Showable {
                 Global.center("CLASSE", columnsSize[3]), Global.center("GENRE", columnsSize[4]), Global.center("RARETE", columnsSize[5]),
                 Global.center("NIV", columnsSize[6]), Global.center("EXP", columnsSize[7]), Global.center("PV", columnsSize[8]),
                 Global.center("ATQ", columnsSize[9]), Global.center("DEF", columnsSize[10]), Global.center("VIT", columnsSize[11])));
-        for (int i=0; i<12; ++i) sb.append("-".repeat(columnsSize[i]+2)).append("|");
-        for (int i=0; i<size(); ++i) sb.append("\n| ").append(i).append(' ').append(get(i).rowShow(columnsSize));
-        sb.append(sep);
+        for (int i=0; i<12; ++i) sb.append("-".repeat(columnsSize[i]+2));
+        for (int i=0; i<size(); ++i) sb.append("\n| ").append(i).append(" | ").append(get(i).rowShow(Arrays.copyOfRange(columnsSize, 1, 12))).append(" |");
+        sb.append('\n').append(sep);
         return sb.toString();
     }
 
