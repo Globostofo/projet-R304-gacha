@@ -295,22 +295,35 @@ public abstract class Hero extends Character {
     @Override
     public String show() {
         String hp = getStat().getRoundedHp() + "/" + getStat().getHpMax();
-        return String.format("""
+        StringBuilder sb = new StringBuilder(String.format("""
                 =========================
                 |%s|
                 | Race %16s |
                 | Classe %14s |
                 | Genre %15s |
                 | Rareté %14s |
-                | Lore %16s |
+                | Lore :                |
+                """,
+                Global.center(name,23), race.getName(), getRole().getName(), gender.name, rarity.name));
+        int i = 0;
+        while (true) {
+            if (lore.length() <= i+21) {
+                sb.append(String.format("| %-21s |\n", lore.substring(i)));
+                break;
+            }
+            sb.append("| ").append(lore, i, i+21).append(" |\n");
+            i += 21;
+        }
+        sb.append(String.format("""
+                |-----------------------|
                 | Level %15d |
                 | PV %18s |
                 | Attaque %13d |
                 | Défense %12d%% |
                 | Vitesse %13d |
                 =========================""",
-                Global.center(name,23), race.getName(), getRole().getName(), gender.name, rarity.name, lore, level,
-                hp, getStat().getAttack(), (int) (getStat().getDefense()*100), getStat().getSpeed());
+                level, hp, getStat().getAttack(), (int) (getStat().getDefense()*100), getStat().getSpeed()));
+        return sb.toString();
     }
 
     /**
