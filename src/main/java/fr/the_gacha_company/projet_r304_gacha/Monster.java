@@ -65,12 +65,12 @@ public class Monster extends Character {
                 | Classe %14s |
                 | PV %18s |
                 | Attaque %13d |
-                | Défense %12d%% |
+                | Défense %13s |
                 | Vitesse %13d |
                 | Récompense %3d pièces |
                 | Récompense %6d exp |
                 =========================""",
-                getRole().getName(), hp, getStat().getAttack(), (int) (getStat().getDefense()*100),
+                getRole().getName(), hp, getStat().getAttack(), getStat().getDisplayDefense(),
                 getStat().getSpeed(), coinsValue, xpValue);
     }
 

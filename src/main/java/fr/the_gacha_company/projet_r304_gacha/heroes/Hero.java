@@ -322,10 +322,10 @@ public abstract class Hero extends Character {
                 | Level %15d |
                 | PV %18s |
                 | Attaque %13d |
-                | Défense %12d%% |
+                | Défense %13s |
                 | Vitesse %13d |
                 =========================""",
-                level, getDisplayHp(), getStat().getAttack(), (int) (getStat().getDefense()*100), getStat().getSpeed()));
+                level, getDisplayHp(), getStat().getAttack(), getStat().getDisplayDefense(), getStat().getSpeed()));
         return sb.toString();
     }
 
