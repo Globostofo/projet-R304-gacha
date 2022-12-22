@@ -287,9 +287,7 @@ public abstract class Hero extends Character {
      */
     @Override
     public String minimalShow() {
-        return name + " | " + race.getName() + " | " + getRole().getName() + " | " + gender.name + " | " + rarity.name +
-                " | " + level + " | " + xp + " | " + getDisplayHp() + " | " +
-                getStat().getAttack() + " | " + (int) (getStat().getDefense()*100) + "% | " + getStat().getSpeed();
+        return null;
     }
 
     /**
@@ -320,13 +318,24 @@ public abstract class Hero extends Character {
         sb.append(String.format("""
                 |-----------------------|
                 | Level %15d |
+                | XP %14d/100 |
                 | PV %18s |
                 | Attaque %13d |
                 | Défense %13s |
                 | Vitesse %13d |
                 =========================""",
-                level, getDisplayHp(), getStat().getAttack(), getStat().getDisplayDefense(), getStat().getSpeed()));
+                level, xp, getDisplayHp(), getStat().getAttack(), getStat().getDisplayDefense(), getStat().getSpeed()));
         return sb.toString();
+    }
+
+    @Override
+    public String rowShow(int[] columnsWidth) {
+        return String.format("%s | %s | %s | %s | %s | %s | %s | %s | %s | %s | %s", Global.leftPad(name, columnsWidth[0]),
+                Global.leftPad(race.getName(), columnsWidth[1]), Global.leftPad(getRole().getName(), columnsWidth[2]),
+                Global.leftPad(gender.name, columnsWidth[3]), Global.leftPad(rarity.name, columnsWidth[4]),
+                Global.rightPad(level, columnsWidth[5]), Global.rightPad(xp, columnsWidth[6]), Global.rightPad(getDisplayHp(), columnsWidth[7]),
+                Global.rightPad(getStat().getAttack(), columnsWidth[8]), Global.rightPad(getStat().getDisplayDefense(), columnsWidth[9]),
+                Global.rightPad(getStat().getSpeed(), columnsWidth[10]));
     }
 
     /**
