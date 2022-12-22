@@ -298,14 +298,14 @@ public abstract class Hero extends Character {
     public String show() {
         StringBuilder sb = new StringBuilder(String.format("""
                 =========================
-                |%s|
+                | %s |
                 | Race %16s |
                 | Classe %14s |
                 | Genre %15s |
                 | Rareté %14s |
                 | Lore :                |
                 """,
-                Global.center(name,23), race.getName(), getRole().getName(), gender.name, rarity.name));
+                Global.center(name, 21), race.getName(), getRole().getName(), gender.name, rarity.name));
         int i = 0;
         while (true) {
             if (lore.length() <= i+21) {

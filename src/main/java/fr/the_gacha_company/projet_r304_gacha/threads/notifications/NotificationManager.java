@@ -40,4 +40,9 @@ public class NotificationManager extends ArrayList<Notification> implements Show
     public String show() {
         return null;
     }
+
+    @Override
+    public String rowShow(int[] columnsWidth) {
+        return null;
+    }
 }
