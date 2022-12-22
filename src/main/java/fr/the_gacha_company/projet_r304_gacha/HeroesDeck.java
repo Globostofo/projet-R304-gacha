@@ -61,9 +61,28 @@ public class HeroesDeck extends ArrayList<Hero> implements Showable {
      */
     @Override
     public String show() {
+        int[] columnsSize = computeColumnsSize();
         StringBuilder sb = new StringBuilder("N | NOM | RACE | CLASSE | GENRE | RARETE | NIV | EXP | PV | ATQ | DEF | VIT");
         for (int i=0; i<size(); ++i) sb.append('\n').append(i).append(" | ").append(get(i).minimalShow());
         return sb.toString();
+    }
+
+    private int[] computeColumnsSize() {
+        int[] columnsSize = {String.valueOf(size()-1).length(), 3, 4, 6, 5, 6, 3, 3, 2, 3, 3, 3};
+        for (Hero h: this) {
+            columnsSize[1] = Math.max(columnsSize[1], h.getName().length());
+            columnsSize[2] = Math.max(columnsSize[2], h.getRace().getName().length());
+            columnsSize[3] = Math.max(columnsSize[3], h.getRole().getName().length());
+            columnsSize[4] = Math.max(columnsSize[4], h.getGender().name.length());
+            columnsSize[5] = Math.max(columnsSize[5], h.getRarity().name.length());
+            columnsSize[6] = Math.max(columnsSize[6], String.valueOf(h.getLevel()).length());
+            columnsSize[7] = Math.max(columnsSize[7], String.valueOf(h.getXp()).length());
+            columnsSize[8] = Math.max(columnsSize[8], h.getDisplayHp().length());
+            columnsSize[9] = Math.max(columnsSize[9], String.valueOf(h.getStat().getAttack()).length());
+            columnsSize[10] = Math.max(columnsSize[10], String.valueOf(h.getStat().getDefense()).length());
+            columnsSize[11] = Math.max(columnsSize[11], String.valueOf(h.getStat().getSpeed()).length());
+        }
+        return columnsSize;
     }
 
 }
