@@ -41,7 +41,7 @@ public final class Global {
     }
 
     public static String leftPad(String s, int size) {
-        return s + " ".repeat(size - s.length());
+        return String.format("%-" + size + "s", s);
     }
 
     public static String leftPad(int i, int size) {
@@ -49,7 +49,7 @@ public final class Global {
     }
 
     public static String rightPad(String s, int size) {
-        return " ".repeat(size - s.length()) + s;
+        return String.format("%" + size + "s", s);
     }
 
     public static String rightPad(int i, int size) {
@@ -63,8 +63,7 @@ public final class Global {
      * @return a String representing the string given center in a string of the given size
      */
     public static String center(String s, int size) {
-        int spaceSum = Math.max(size - s.length(), 0);
-        return " ".repeat(spaceSum / 2) + s + " ".repeat(spaceSum / 2 + Math.floorMod(spaceSum, 2));
+        return leftPad(rightPad(s, (size/2+Math.floorMod(size,2))), size);
     }
 
 }
