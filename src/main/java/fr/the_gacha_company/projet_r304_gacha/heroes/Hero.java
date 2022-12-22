@@ -277,6 +277,10 @@ public abstract class Hero extends Character {
         new Thread(new RegenJob(this, new HeroEndedRegenNotification(notificationManager, this))).start();
     }
 
+    public String getDisplayHp() {
+        return getStat().getRoundedHp() + "/" + getStat().getHpMax();
+    }
+
     /**
      * The methode that create the minimal show that the player can see in the terminal
      * @return the minimalShow string
@@ -294,7 +298,6 @@ public abstract class Hero extends Character {
      */
     @Override
     public String show() {
-        String hp = getStat().getRoundedHp() + "/" + getStat().getHpMax();
         StringBuilder sb = new StringBuilder(String.format("""
                 =========================
                 |%s|
@@ -322,7 +325,7 @@ public abstract class Hero extends Character {
                 | Défense %12d%% |
                 | Vitesse %13d |
                 =========================""",
-                level, hp, getStat().getAttack(), (int) (getStat().getDefense()*100), getStat().getSpeed()));
+                level, getDisplayHp(), getStat().getAttack(), (int) (getStat().getDefense()*100), getStat().getSpeed()));
         return sb.toString();
     }
 
