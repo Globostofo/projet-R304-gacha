@@ -40,6 +40,14 @@ public final class Global {
         System.out.println(SEPARATOR);
     }
 
+    public static String leftPad(String s, int size) {
+        return s + " ".repeat(size - s.length());
+    }
+
+    public static String rightPad(String s, int size) {
+        return " ".repeat(size - s.length()) + s;
+    }
+
     /**
      * Centers a String in a size chars spaces
      * @param s a String to center
