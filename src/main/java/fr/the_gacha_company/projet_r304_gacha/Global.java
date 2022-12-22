@@ -66,4 +66,8 @@ public final class Global {
         return leftPad(rightPad(s, (size/2+Math.floorMod(size,2))), size);
     }
 
+    public static String center(int i, int size) {
+        return center(String.valueOf(i), size);
+    }
+
 }
