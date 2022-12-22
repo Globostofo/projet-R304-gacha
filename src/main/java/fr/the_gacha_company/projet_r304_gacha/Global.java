@@ -63,7 +63,8 @@ public final class Global {
      * @return a String representing the string given center in a string of the given size
      */
     public static String center(String s, int size) {
-        return leftPad(rightPad(s, (size/2+Math.floorMod(size,2))), size);
+        int spaceSum = Math.max(size - s.length(), 0);
+        return " ".repeat(spaceSum / 2) + s + " ".repeat(spaceSum / 2 + Math.floorMod(spaceSum, 2));
     }
 
     public static String center(int i, int size) {
