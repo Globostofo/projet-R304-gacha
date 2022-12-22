@@ -288,7 +288,7 @@ public abstract class Hero extends Character {
     @Override
     public String minimalShow() {
         return name + " | " + race.getName() + " | " + getRole().getName() + " | " + gender.name + " | " + rarity.name +
-                " | " + level + " | " + xp + " | " + getStat().getRoundedHp() + '/' + getStat().getHpMax() + " | " +
+                " | " + level + " | " + xp + " | " + getDisplayHp() + " | " +
                 getStat().getAttack() + " | " + (int) (getStat().getDefense()*100) + "% | " + getStat().getSpeed();
     }
 
