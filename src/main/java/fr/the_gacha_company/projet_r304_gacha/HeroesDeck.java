@@ -66,12 +66,12 @@ public class HeroesDeck extends ArrayList<Hero> implements Showable {
         int totalSize = Arrays.stream(columnsSize).sum() + 37;
         String sep = "=".repeat(totalSize);
         StringBuilder sb = new StringBuilder(sep);
-        sb.append(String.format("\n| %s | %s | %s | %s | %s | %s | %s | %s | %s | %s | %s | %s |\n|",
+        sb.append(String.format("\n| %s | %s | %s | %s | %s | %s | %s | %s | %s | %s | %s | %s |\n",
                 Global.center("N", columnsSize[0]), Global.center("NOM", columnsSize[1]), Global.center("RACE", columnsSize[2]),
                 Global.center("CLASSE", columnsSize[3]), Global.center("GENRE", columnsSize[4]), Global.center("RARETE", columnsSize[5]),
                 Global.center("NIV", columnsSize[6]), Global.center("EXP", columnsSize[7]), Global.center("PV", columnsSize[8]),
                 Global.center("ATQ", columnsSize[9]), Global.center("DEF", columnsSize[10]), Global.center("VIT", columnsSize[11])));
-        for (int i=0; i<12; ++i) sb.append("-".repeat(columnsSize[i]+2));
+        sb.append('|').append("-".repeat(totalSize-2)).append('|');
         for (int i=0; i<size(); ++i) sb.append("\n| ").append(i).append(" | ").append(get(i).rowShow(Arrays.copyOfRange(columnsSize, 1, 12))).append(" |");
         sb.append('\n').append(sep);
         return sb.toString();
@@ -94,7 +94,7 @@ public class HeroesDeck extends ArrayList<Hero> implements Showable {
             columnsSize[7] = Math.max(columnsSize[7], String.valueOf(h.getXp()).length());
             columnsSize[8] = Math.max(columnsSize[8], h.getDisplayHp().length());
             columnsSize[9] = Math.max(columnsSize[9], String.valueOf(h.getStat().getAttack()).length());
-            columnsSize[10] = Math.max(columnsSize[10], String.valueOf(h.getStat()).length());
+            columnsSize[10] = Math.max(columnsSize[10], h.getStat().getDisplayDefense().length());
             columnsSize[11] = Math.max(columnsSize[11], String.valueOf(h.getStat().getSpeed()).length());
         }
         return columnsSize;
