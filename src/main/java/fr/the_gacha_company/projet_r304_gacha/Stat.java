@@ -97,6 +97,10 @@ public class Stat {
         return defense;
     }
 
+    public String getDisplayDefense() {
+        return String.format("%d%%", (int) (getDefense()*100));
+    }
+
     /**
      * Get the speed
      * @return the speed

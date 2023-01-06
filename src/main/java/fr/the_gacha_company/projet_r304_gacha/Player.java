@@ -50,7 +50,7 @@ public final class Player {
     public static String showMainMenu() {
         StringBuilder sb = new StringBuilder();
         if (!notificationManager.isEmpty()) sb.append(notificationManager.read()).append("\n\n");
-        sb.append("Vous avez " + coins + " pièces\n").append(INSTRUCTIONS);
+        sb.append("Vous avez ").append(coins).append(" pièces\n").append(INSTRUCTIONS);
         return sb.toString();
     }
  

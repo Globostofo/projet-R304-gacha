@@ -40,6 +40,22 @@ public final class Global {
         System.out.println(SEPARATOR);
     }
 
+    public static String leftPad(String s, int size) {
+        return String.format("%-" + size + "s", s);
+    }
+
+    public static String leftPad(int i, int size) {
+        return leftPad(String.valueOf(i), size);
+    }
+
+    public static String rightPad(String s, int size) {
+        return String.format("%" + size + "s", s);
+    }
+
+    public static String rightPad(int i, int size) {
+        return rightPad(String.valueOf(i), size);
+    }
+
     /**
      * Centers a String in a size chars spaces
      * @param s a String to center
@@ -49,6 +65,10 @@ public final class Global {
     public static String center(String s, int size) {
         int spaceSum = Math.max(size - s.length(), 0);
         return " ".repeat(spaceSum / 2) + s + " ".repeat(spaceSum / 2 + Math.floorMod(spaceSum, 2));
+    }
+
+    public static String center(int i, int size) {
+        return center(String.valueOf(i), size);
     }
 
 }

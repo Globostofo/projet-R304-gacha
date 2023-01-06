@@ -65,13 +65,21 @@ public class Monster extends Character {
                 | Classe %14s |
                 | PV %18s |
                 | Attaque %13d |
-                | Défense %12d%% |
+                | Défense %13s |
                 | Vitesse %13d |
                 | Récompense %3d pièces |
                 | Récompense %6d exp |
                 =========================""",
-                getRole().getName(), hp, getStat().getAttack(), (int) (getStat().getDefense()*100),
+                getRole().getName(), hp, getStat().getAttack(), getStat().getDisplayDefense(),
                 getStat().getSpeed(), coinsValue, xpValue);
+    }
+
+    @Override
+    public String rowShow(int[] columnsWidth) {
+        return String.format("%s | %s | %s | %s | %s | %s | %s", Global.leftPad(getRole().getName(), columnsWidth[0]),
+                Global.rightPad(getStat().getHpMax(), columnsWidth[1]), Global.rightPad(getStat().getAttack(), columnsWidth[2]),
+                Global.rightPad(getStat().getDisplayDefense(), columnsWidth[3]), Global.rightPad(getStat().getSpeed(), columnsWidth[4]),
+                Global.rightPad(coinsValue, columnsWidth[5]), Global.rightPad(xpValue, columnsWidth[6]));
     }
 
 }

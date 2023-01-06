@@ -277,15 +277,17 @@ public abstract class Hero extends Character {
         new Thread(new RegenJob(this, new HeroEndedRegenNotification(notificationManager, this))).start();
     }
 
+    public String getDisplayHp() {
+        return getStat().getRoundedHp() + "/" + getStat().getHpMax();
+    }
+
     /**
      * The methode that create the minimal show that the player can see in the terminal
      * @return the minimalShow string
      */
     @Override
     public String minimalShow() {
-        return name + " | " + race.getName() + " | " + getRole().getName() + " | " + gender.name + " | " + rarity.name +
-                " | " + level + " | " + xp + " | " + getStat().getRoundedHp() + '/' + getStat().getHpMax() + " | " +
-                getStat().getAttack() + " | " + (int) (getStat().getDefense()*100) + "% | " + getStat().getSpeed();
+        return null;
     }
 
     /**
@@ -294,23 +296,46 @@ public abstract class Hero extends Character {
      */
     @Override
     public String show() {
-        String hp = getStat().getRoundedHp() + "/" + getStat().getHpMax();
-        return String.format("""
+        StringBuilder sb = new StringBuilder(String.format("""
                 =========================
-                |%s|
+                | %s |
                 | Race %16s |
                 | Classe %14s |
                 | Genre %15s |
                 | Rareté %14s |
-                | Lore %16s |
+                | Lore :                |
+                """,
+                Global.center(name, 21), race.getName(), getRole().getName(), gender.name, rarity.name));
+        int i = 0;
+        while (true) {
+            if (lore.length() <= i+21) {
+                sb.append(String.format("| %-21s |\n", lore.substring(i)));
+                break;
+            }
+            sb.append("| ").append(lore, i, i+21).append(" |\n");
+            i += 21;
+        }
+        sb.append(String.format("""
+                |-----------------------|
                 | Level %15d |
+                | XP %14d/100 |
                 | PV %18s |
                 | Attaque %13d |
-                | Défense %12d%% |
+                | Défense %13s |
                 | Vitesse %13d |
                 =========================""",
-                Global.center(name,23), race.getName(), getRole().getName(), gender.name, rarity.name, lore, level,
-                hp, getStat().getAttack(), (int) (getStat().getDefense()*100), getStat().getSpeed());
+                level, xp, getDisplayHp(), getStat().getAttack(), getStat().getDisplayDefense(), getStat().getSpeed()));
+        return sb.toString();
+    }
+
+    @Override
+    public String rowShow(int[] columnsWidth) {
+        return String.format("%s | %s | %s | %s | %s | %s | %s | %s | %s | %s | %s", Global.leftPad(name, columnsWidth[0]),
+                Global.leftPad(race.getName(), columnsWidth[1]), Global.leftPad(getRole().getName(), columnsWidth[2]),
+                Global.leftPad(gender.name, columnsWidth[3]), Global.leftPad(rarity.name, columnsWidth[4]),
+                Global.rightPad(level, columnsWidth[5]), Global.rightPad(xp, columnsWidth[6]), Global.rightPad(getDisplayHp(), columnsWidth[7]),
+                Global.rightPad(getStat().getAttack(), columnsWidth[8]), Global.rightPad(getStat().getDisplayDefense(), columnsWidth[9]),
+                Global.rightPad(getStat().getSpeed(), columnsWidth[10]));
     }
 
     /**

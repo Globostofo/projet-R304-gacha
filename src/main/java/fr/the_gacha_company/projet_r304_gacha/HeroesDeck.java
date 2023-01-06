@@ -2,6 +2,7 @@ package fr.the_gacha_company.projet_r304_gacha;
 
 import fr.the_gacha_company.projet_r304_gacha.heroes.Hero;
 
+import java.security.GuardedObject;
 import java.util.*;
 
 public class HeroesDeck extends ArrayList<Hero> implements Showable {
@@ -61,9 +62,42 @@ public class HeroesDeck extends ArrayList<Hero> implements Showable {
      */
     @Override
     public String show() {
-        StringBuilder sb = new StringBuilder("N | NOM | RACE | CLASSE | GENRE | RARETE | NIV | EXP | PV | ATQ | DEF | VIT");
-        for (int i=0; i<size(); ++i) sb.append('\n').append(i).append(" | ").append(get(i).minimalShow());
+        int[] columnsSize = computeColumnsSize();
+        int totalSize = Arrays.stream(columnsSize).sum() + 37;
+        String sep = "=".repeat(totalSize);
+        StringBuilder sb = new StringBuilder(sep);
+        sb.append(String.format("\n| %s | %s | %s | %s | %s | %s | %s | %s | %s | %s | %s | %s |\n",
+                Global.center("N", columnsSize[0]), Global.center("NOM", columnsSize[1]), Global.center("RACE", columnsSize[2]),
+                Global.center("CLASSE", columnsSize[3]), Global.center("GENRE", columnsSize[4]), Global.center("RARETE", columnsSize[5]),
+                Global.center("NIV", columnsSize[6]), Global.center("EXP", columnsSize[7]), Global.center("PV", columnsSize[8]),
+                Global.center("ATQ", columnsSize[9]), Global.center("DEF", columnsSize[10]), Global.center("VIT", columnsSize[11])));
+        sb.append('|').append("-".repeat(totalSize-2)).append('|');
+        for (int i=0; i<size(); ++i) sb.append("\n| ").append(i).append(" | ").append(get(i).rowShow(Arrays.copyOfRange(columnsSize, 1, 12))).append(" |");
+        sb.append('\n').append(sep);
         return sb.toString();
+    }
+
+    @Override
+    public String rowShow(int[] columnsSize) {
+        return null;
+    }
+
+    private int[] computeColumnsSize() {
+        int[] columnsSize = {String.valueOf(size()-1).length(), 3, 4, 6, 5, 6, 3, 3, 2, 3, 3, 3};
+        for (Hero h: this) {
+            columnsSize[1] = Math.max(columnsSize[1], h.getName().length());
+            columnsSize[2] = Math.max(columnsSize[2], h.getRace().getName().length());
+            columnsSize[3] = Math.max(columnsSize[3], h.getRole().getName().length());
+            columnsSize[4] = Math.max(columnsSize[4], h.getGender().name.length());
+            columnsSize[5] = Math.max(columnsSize[5], h.getRarity().name.length());
+            columnsSize[6] = Math.max(columnsSize[6], String.valueOf(h.getLevel()).length());
+            columnsSize[7] = Math.max(columnsSize[7], String.valueOf(h.getXp()).length());
+            columnsSize[8] = Math.max(columnsSize[8], h.getDisplayHp().length());
+            columnsSize[9] = Math.max(columnsSize[9], String.valueOf(h.getStat().getAttack()).length());
+            columnsSize[10] = Math.max(columnsSize[10], h.getStat().getDisplayDefense().length());
+            columnsSize[11] = Math.max(columnsSize[11], String.valueOf(h.getStat().getSpeed()).length());
+        }
+        return columnsSize;
     }
 
 }
