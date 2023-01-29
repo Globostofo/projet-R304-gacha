@@ -18,9 +18,11 @@ public class Game implements Runnable {
         do {
             System.out.println(getMainMenu());
             userInput = Global.getInput("Instruction : ");
-            if (userInput.equals("1")) player.buyHero();
-            else if (userInput.equals("2")) player.viewHeroes();
-            else if (userInput.equals("3")) player.startFight();
+            switch (userInput) {
+                case "1" -> player.buyHero();
+                case "2" -> player.viewHeroes();
+                case "3" -> player.startFight(notificationManager);
+            }
             Global.pressEnter();
         } while (!userInput.equals("4"));
     }

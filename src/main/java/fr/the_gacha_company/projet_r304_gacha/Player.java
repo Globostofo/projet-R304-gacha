@@ -37,27 +37,22 @@ public final class Player {
     private final HeroesDeck deck = new HeroesDeck();
     private int coins = 600;
 
-    /**
-     * Execute user choice
-     * @param choice an int representing user choice based on INSTRUCTIONS
-     * @return an int: -1 if quitting else 0
-     */
-    public int play(int choice) {
-        switch (choice) {
-            case 1 -> {
-                if (coins >= HERO_COST) {
-                    // buy a hero
-                    coins -= HERO_COST;
-                    Hero h = Hero.getRandomHero();
-                    deck.add(h);
-                    System.out.println(h.show());
-                } else
-                    System.out.println("Tu n'as pas assez d'argent (" + coins + " pièces)");
-                Global.pressEnter();
-            }
-            case 2 -> {
-                // display player's heroes
-                int i = Integer.parseInt(Global.getInput("""
+    public int getCoins() {
+        return coins;
+    }
+
+    public void buyHero() {
+        if (coins >= HERO_COST) {
+            coins -= HERO_COST;
+            Hero h = Hero.getRandomHero();
+            deck.add(h);
+            System.out.println(h.show());
+        } else
+            System.out.println("Tu n'as pas assez d'argent (" + coins + " pièces)");
+    }
+
+    public void viewHeroes() {
+        int i = Integer.parseInt(Global.getInput("""
                         Trier par :
                         1. Nom
                         2. Rareté
@@ -68,45 +63,39 @@ public final class Player {
                         7. Vitesse
                         
                         Attribut (1-7) :\s"""));
-                boolean reversed = Integer.parseInt(Global.getInput("Tri décroissant ? (0-1) : ")) == 1;
-                switch (i) {
-                    case 1 -> {
-                        deck.sortList(HeroesDeck.BY_NAME, reversed);
-                    }
-                    case 2 -> {
-                        deck.sortList(HeroesDeck.BY_RARITY, reversed);
-                    }
-                    case 3 -> {
-                        deck.sortList(HeroesDeck.BY_LEVEL, reversed);
-                    }
-                    case 4 -> {
-                        deck.sortList(HeroesDeck.BY_HP_MAX, reversed);
-                    }
-                    case 5 -> {
-                        deck.sortList(HeroesDeck.BY_ATTACK, reversed);
-                    }
-                    case 6 -> {
-                        deck.sortList(HeroesDeck.BY_DEFENSE, reversed);
-                    }
-                    case 7 -> {
-                        deck.sortList(HeroesDeck.BY_SPEED, reversed);
-                    }
-                }
-                System.out.println(deck.show());
-                Global.pressEnter();
+        boolean reversed = Integer.parseInt(Global.getInput("Tri décroissant ? (0-1) : ")) == 1;
+        switch (i) {
+            case 1 -> {
+                deck.sortList(HeroesDeck.BY_NAME, reversed);
+            }
+            case 2 -> {
+                deck.sortList(HeroesDeck.BY_RARITY, reversed);
             }
             case 3 -> {
-                Monster m = Monster.createMonster();
-                System.out.println(m.show() + "\n\n" + deck.show() + '\n');
-                Hero h = deck.get(Integer.parseInt(Global.getInput("Choisissez un héros (N) : ")));
-                fight(h, m);
-//                h.startRegenThread(notificationManager);
-                Global.pressEnter();
+                deck.sortList(HeroesDeck.BY_LEVEL, reversed);
             }
             case 4 -> {
-                return -1;
+                deck.sortList(HeroesDeck.BY_HP_MAX, reversed);
+            }
+            case 5 -> {
+                deck.sortList(HeroesDeck.BY_ATTACK, reversed);
+            }
+            case 6 -> {
+                deck.sortList(HeroesDeck.BY_DEFENSE, reversed);
+            }
+            case 7 -> {
+                deck.sortList(HeroesDeck.BY_SPEED, reversed);
             }
         }
-        return 0;
+        System.out.println(deck.show());
     }
+
+    public void startFight(NotificationManager notificationManager) {
+        Monster m = Monster.createMonster();
+        System.out.println(m.show() + "\n\n" + deck.show() + '\n');
+        Hero h = deck.get(Integer.parseInt(Global.getInput("Choisissez un héros (N) : ")));
+        fight(h, m);
+        h.startRegenThread(notificationManager);
+    }
+
 }
