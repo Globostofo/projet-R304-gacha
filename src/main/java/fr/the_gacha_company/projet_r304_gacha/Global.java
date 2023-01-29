@@ -1,6 +1,5 @@
 package fr.the_gacha_company.projet_r304_gacha;
 
-import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,9 +9,9 @@ import java.util.Scanner;
 public final class Global {
 
     public static final String SEPARATOR = "_".repeat(60);
+    public static final Random rand = new Random();
 
-    private  static final Scanner in = new Scanner(System.in);
-    private  static final Random rand = new Random();
+    private static final Scanner in = new Scanner(System.in);
 
     /**
      * Gets an int from user.
