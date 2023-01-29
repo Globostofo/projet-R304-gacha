@@ -9,26 +9,21 @@ import java.util.Scanner;
  */
 public final class Global {
 
-    public static final Scanner in = new Scanner(System.in);
     public static final String SEPARATOR = "_".repeat(60);
-    public static final Random rand = new Random();
+
+    private  static final Scanner in = new Scanner(System.in);
+    private  static final Random rand = new Random();
 
     /**
      * Gets an int from user.
-     * @param s a String representing displayed instructions for user
+     * @param msg a String representing displayed instructions for user
      * @return an int representing the first correct user input
      */
-    public static int getInput(String s) throws MyInputException {
-        System.out.print(s);
-        try {
-            int i = in.nextInt();
-            in.nextLine();
-            System.out.println(SEPARATOR);
-            return i;
-        } catch (InputMismatchException e) {
-            in.nextLine();
-            throw new MyInputException();
-        }
+    public static String getInput(String msg) {
+        System.out.print(msg);
+        String s = in.nextLine();
+        System.out.println(SEPARATOR);
+        return s;
     }
 
     /**
