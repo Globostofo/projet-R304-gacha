@@ -8,13 +8,7 @@ import fr.the_gacha_company.projet_r304_gacha.threads.notifications.Notification
  */
 public final class Player {
 
-    public static final String INSTRUCTIONS = """
-            1. Acheter un héros
-            2. Mes héros
-            3. Combattre
-            4. Quitter le jeu""";
     public static final int HERO_COST = 200;
-    public static final NotificationManager notificationManager = new NotificationManager();
 
     /**
      * Realize a fight between a Hero and a Monster.
@@ -22,7 +16,7 @@ public final class Player {
      * @param hero a Hero
      * @param monster a Monster
      */
-    private static void fight(Hero hero, Monster monster) {
+    private void fight(Hero hero, Monster monster) {
         if (monster.getStat().getSpeed()>hero.getStat().getSpeed())
             monster.attack(hero);
         while (true) {
@@ -40,27 +34,15 @@ public final class Player {
             monster.attack(hero);
         }
     }
-    private static final HeroesDeck deck = new HeroesDeck();
-    private static int coins = 600; // TODO : DONT FORGET TO RESET TO 0
+    private final HeroesDeck deck = new HeroesDeck();
+    private int coins = 600;
 
-    /**
-     * Obtain the displayable main menu, with notifications (if any) and the instructions to show user's possibilities
-     * @return a String representing the displayable main menu
-     */
-    public static String showMainMenu() {
-        StringBuilder sb = new StringBuilder();
-        if (!notificationManager.isEmpty()) sb.append(notificationManager.read()).append("\n\n");
-        sb.append("Vous avez ").append(coins).append(" pièces\n").append(INSTRUCTIONS);
-        return sb.toString();
-    }
- 
     /**
      * Execute user choice
      * @param choice an int representing user choice based on INSTRUCTIONS
      * @return an int: -1 if quitting else 0
-     * @see #INSTRUCTIONS
      */
-    public static int play(int choice) throws MyInputException {
+    public int play(int choice) {
         switch (choice) {
             case 1 -> {
                 if (coins >= HERO_COST) {
@@ -75,7 +57,7 @@ public final class Player {
             }
             case 2 -> {
                 // display player's heroes
-                int i = Global.getInput("""
+                int i = Integer.parseInt(Global.getInput("""
                         Trier par :
                         1. Nom
                         2. Rareté
@@ -85,8 +67,8 @@ public final class Player {
                         6. Défense
                         7. Vitesse
                         
-                        Attribut (1-7) :\s""");
-                boolean reversed = Global.getInput("Tri décroissant ? (0-1) : ") == 1;
+                        Attribut (1-7) :\s"""));
+                boolean reversed = Integer.parseInt(Global.getInput("Tri décroissant ? (0-1) : ")) == 1;
                 switch (i) {
                     case 1 -> {
                         deck.sortList(HeroesDeck.BY_NAME, reversed);
@@ -109,7 +91,6 @@ public final class Player {
                     case 7 -> {
                         deck.sortList(HeroesDeck.BY_SPEED, reversed);
                     }
-                    default -> throw new MyInputException();
                 }
                 System.out.println(deck.show());
                 Global.pressEnter();
@@ -117,15 +98,14 @@ public final class Player {
             case 3 -> {
                 Monster m = Monster.createMonster();
                 System.out.println(m.show() + "\n\n" + deck.show() + '\n');
-                Hero h = deck.get(Global.getInput("Choisissez un héros (N) : "));
+                Hero h = deck.get(Integer.parseInt(Global.getInput("Choisissez un héros (N) : ")));
                 fight(h, m);
-                h.startRegenThread(notificationManager);
+//                h.startRegenThread(notificationManager);
                 Global.pressEnter();
             }
             case 4 -> {
                 return -1;
             }
-            default -> throw new MyInputException();
         }
         return 0;
     }
